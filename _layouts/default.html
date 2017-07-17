@@ -257,10 +257,10 @@
         }, { duration: 600000 })
         .velocity("reverse", { easing: "easeOutQuad" })
         .velocity({ opacity: 0 }, { duration: 2000, complete: function() { 
-            $welcome
-                .html("<a href='https://www.youtube.com/watch?v=MDLiVB6g2NY&hd=1'>Watch the making of this demo.</a><br /><br />Go create something amazing.<br />Sincerely, <a href='http://twitter.com/shapiro'>@Shapiro</a>")
-                .velocity({ opacity: 0.75 }, { duration: 3500, display: "block" })
-                .find("*").add($welcome).css("pointer-events", "auto");
+            // $welcome
+            //     .html("<a href='https://www.youtube.com/watch?v=MDLiVB6g2NY&hd=1'>Watch the making of this demo.</a><br /><br />Go create something amazing.<br />Sincerely, <a href='http://twitter.com/shapiro'>@Shapiro</a>")
+            //     .velocity({ opacity: 0.75 }, { duration: 3500, display: "block" })
+            //     .find("*").add($welcome).css("pointer-events", "auto");
             }
         })
         .appendTo($container);
