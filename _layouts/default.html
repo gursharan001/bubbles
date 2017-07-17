@@ -184,9 +184,6 @@
     }
 
     $dots = $(dotsHtml);
-    $dots.on('click', function(e){
-        console.log("someone clicked me!");
-    });
 
     //$count.html(dotsCount);
 
@@ -267,6 +264,11 @@
         //     }
         // })
         .appendTo($container);
+    
+    $container.on('click', '.dot', function(e){
+        console.log("someone clicked me!");
+    });
+
     </script>
     </body>
 </html>
