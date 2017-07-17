@@ -184,6 +184,9 @@
     }
 
     $dots = $(dotsHtml);
+    $dots.on('click', function(e){
+        console.log("someone clicked me!");
+    });
 
     //$count.html(dotsCount);
 
