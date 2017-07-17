@@ -226,9 +226,9 @@
     // $welcome.velocity({ opacity: [ 0, 0.65 ] }, { display: "none", delay: 3500, duration: 1100 });
 
     /* Animate the dots' container. */
-    $container
-        .css("perspective-origin", screenWidth/2 + "px " + ((screenHeight * 0.45) - chromeHeight) + "px")
-        .velocity(containerAnimationMap, { duration: 800, loop: 1, delay: 3250 });
+    // $container
+    //     .css("perspective-origin", screenWidth/2 + "px " + ((screenHeight * 0.45) - chromeHeight) + "px")
+    //     .velocity(containerAnimationMap, { duration: 800, loop: 1, delay: 3250 });
 
     /* Special visual enhancement for WebKit browsers, which are faster at box-shadow manipulation. */
     if (isWebkit) {
@@ -254,7 +254,7 @@
                 function() { return Math.random() },
                 function() { return Math.random() + 0.1 }
             ]
-        }, { duration: 60000 })
+        }, { duration: 600000 })
         .velocity("reverse", { easing: "easeOutQuad" })
         .velocity({ opacity: 0 }, { duration: 2000, complete: function() { 
             $welcome
