@@ -1,0 +1,22 @@
+{
+  "name": "bubbles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gursharan001/bubbles.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gursharan001/bubbles/issues"
+  },
+  "homepage": "https://github.com/gursharan001/bubbles#readme",
+  "devDependencies": {
+    "babylonjs": "^3.1.0-alpha3.6"
+  }
+}
