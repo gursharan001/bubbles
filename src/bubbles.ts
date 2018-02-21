@@ -121,9 +121,10 @@ class Bubbles {
 
             const physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 1 }, scene);
             const negative = Math.random() > 0.5 ? 1 : -1;
-            physicsImpostor.applyImpulse(new BABYLON.Vector3(negative * 20, 0, negative * 10), sphere.getAbsolutePosition());
+            //physicsImpostor.applyImpulse(new BABYLON.Vector3(negative * 20, 0, negative * 10), sphere.getAbsolutePosition());
+            physicsImpostor.setAngularVelocity(new BABYLON.Quaternion(0, 1, 0, 0) as any);
             sphere.physicsImpostor = physicsImpostor;
-            y += 2;
+            y += 1;
         }
     }
 
