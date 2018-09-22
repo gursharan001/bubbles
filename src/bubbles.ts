@@ -16,6 +16,7 @@ class Bubbles {
       const engine = this._engine;
       let scene = new BABYLON.Scene(engine);
       scene.clearColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Purple());
+      scene.collisionsEnabled = true;
   
       //var camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, -20), scene);
       var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -20), scene);
@@ -23,7 +24,9 @@ class Bubbles {
       camera.checkCollisions = true;
       camera.applyGravity = true;
       camera.setTarget(new BABYLON.Vector3(0, 0, 0));
-  
+      //Set the ellipsoid around the camera (e.g. your player's size)
+      camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+
       var light = new BABYLON.DirectionalLight("dir02", new BABYLON.Vector3(0.2, -1, 0), scene);
       light.position = new BABYLON.Vector3(0, 80, 0);
   
@@ -64,45 +67,46 @@ class Bubbles {
       // Link
       const spheres = [];
       for (let index = 0; index < 10; index++) {
-          let sphere = BABYLON.Mesh.CreateSphere("Sphere0", 16, 1, scene);
+          let sphere = BABYLON.Mesh.CreateSphere(`Sphere${index}`, 16, 1, scene);
           spheres.push(sphere);
           sphere.material = materialAmiga2;
           sphere.position = new BABYLON.Vector3(Math.random() * 20 - 10, y, Math.random() * 10 - 5);
-  
+          sphere.checkCollisions = true;
+
           shadowGenerator.addShadowCaster(sphere);
   
           sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
       }
   
-      for (let index = 0; index < 9; index++) {
-          spheres[index].setPhysicsLinkWith(spheres[index + 1], new BABYLON.Vector3(0, 0.5, 0), new BABYLON.Vector3(0, -0.5, 0));
-      }
+      // for (let index = 0; index < 9; index++) {
+      //     spheres[index].setPhysicsLinkWith(spheres[index + 1], new BABYLON.Vector3(0, 0.5, 0), new BABYLON.Vector3(0, -0.5, 0));
+      // }
   
       // Box
-      var box0 = BABYLON.Mesh.CreateBox("Box0", 3, scene);
-      box0.position = new BABYLON.Vector3(3, 30, 0);
-      var materialWood = new BABYLON.StandardMaterial("wood", scene);
-      materialWood.diffuseTexture = new BABYLON.Texture("textures/crate.png", scene);
-      materialWood.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5);
-      box0.material = materialWood;
+      // var box0 = BABYLON.Mesh.CreateBox("Box0", 3, scene);
+      // box0.position = new BABYLON.Vector3(3, 30, 0);
+      // var materialWood = new BABYLON.StandardMaterial("wood", scene);
+      // materialWood.diffuseTexture = new BABYLON.Texture("textures/crate.png", scene);
+      // materialWood.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+      // box0.material = materialWood;
   
-      shadowGenerator.addShadowCaster(box0);
+      // shadowGenerator.addShadowCaster(box0);
   
-      // Compound
-      var part0 = BABYLON.Mesh.CreateBox("part0", 3, scene);
-      part0.position = new BABYLON.Vector3(3, 30, 0);
-      part0.material = materialWood;
+      // // Compound
+      // var part0 = BABYLON.Mesh.CreateBox("part0", 3, scene);
+      // part0.position = new BABYLON.Vector3(3, 30, 0);
+      // part0.material = materialWood;
   
-      var part1 = BABYLON.Mesh.CreateBox("part1", 3, scene);
-      part1.parent = part0; // We need a hierarchy for compound objects
-      part1.position = new BABYLON.Vector3(0, 3, 0);
-      part1.material = materialWood;
+      // var part1 = BABYLON.Mesh.CreateBox("part1", 3, scene);
+      // part1.parent = part0; // We need a hierarchy for compound objects
+      // part1.position = new BABYLON.Vector3(0, 3, 0);
+      // part1.material = materialWood;
   
-      shadowGenerator.addShadowCaster(part0);
-      shadowGenerator.addShadowCaster(part1);
-    shadowGenerator.useBlurExponentialShadowMap = true;
-      shadowGenerator.useKernelBlur = true;
-      shadowGenerator.blurKernel = 32;
+      // shadowGenerator.addShadowCaster(part0);
+      // shadowGenerator.addShadowCaster(part1);
+      // shadowGenerator.useBlurExponentialShadowMap = true;
+      // shadowGenerator.useKernelBlur = true;
+      // shadowGenerator.blurKernel = 32;
   
   
       // Playground
@@ -147,17 +151,28 @@ class Bubbles {
       ground.receiveShadows = true;
   
       // Physics
-      box0.physicsImpostor = new BABYLON.PhysicsImpostor(box0, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.4, restitution: 0.3 }, scene);
+      // box0.physicsImpostor = new BABYLON.PhysicsImpostor(box0, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.4, restitution: 0.3 }, scene);
       ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
       border0.physicsImpostor = new BABYLON.PhysicsImpostor(border0, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }, scene);
       border1.physicsImpostor = new BABYLON.PhysicsImpostor(border1, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }, scene);
       border2.physicsImpostor = new BABYLON.PhysicsImpostor(border2, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }, scene);
       border3.physicsImpostor = new BABYLON.PhysicsImpostor(border3, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }, scene);
   
-      part0.physicsImpostor = new BABYLON.PhysicsImpostor(part0, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.4, restitution: 0.3 }, scene);
+      // part0.physicsImpostor = new BABYLON.PhysicsImpostor(part0, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.4, restitution: 0.3 }, scene); 
   
       this._scene = scene;
+
+      window.addEventListener("click", this.pickMesh);
+    }
+
+    pickMesh = () => {
+      const pickResult = this._scene.pick(this._scene.pointerX, this._scene.pointerY);
+      if(pickResult.pickedMesh){
+        console.log([pickResult.pickedMesh.id, pickResult]);
+      }else{
+        console.log(pickResult);
       }
+    }
 
     addCamera(scene: BABYLON.Scene, canvas: HTMLCanvasElement) {
         const camera = new BABYLON.ArcRotateCamera('camera1', Math.PI / 8, Math.PI / 2.5, 50, BABYLON.Vector3.Zero(), scene);
@@ -276,13 +291,13 @@ class Bubbles {
     }
 }
   
-    window.addEventListener('DOMContentLoaded', () => {
-        // Create the game using the 'renderCanvas'
-        let game = new Bubbles('renderCanvas');
+window.addEventListener('DOMContentLoaded', () => {
+    // Create the game using the 'renderCanvas'
+    let game = new Bubbles('renderCanvas');
 
-        // Create the scene
-        game.createScene();
+    // Create the scene
+    game.createScene();
 
-        // start animation
-        game.doRender();
-    });
+    // start animation
+    game.doRender();
+});
